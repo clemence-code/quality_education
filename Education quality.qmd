@@ -1,0 +1,21 @@
+---
+title: "Education quality"
+author: "Daphné PERRY Justine CATTA Chloé MARQUIS Clémence HUANG"
+execute:
+  echo: false
+format:
+  wordcount-html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    code-fold: true
+  pdf:
+    toc: true
+editor: visual
+---
+
+1.     What are the different high school quality indicators published by the ministry of higher education?
+
+2.     How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?
+
+3.     How do the IVAL and other indicators correlate with IPS (indicateurs de position sociale, a higher IPS indicates the higher average socio-economic status of parents at the school level) in Paris? Can you propose a way to represent graphically the correlations, for High schools in Paris (separately for public and private high schools)?
