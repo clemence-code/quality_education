@@ -14,8 +14,32 @@ format:
 editor: visual
 ---
 
-1.     What are the different high school quality indicators published by the ministry of higher education?
+1.  
 
-2.     How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?
+    ```         
+    What are the different high school quality indicators published by the ministry of higher education?
+    ```
 
-3.     How do the IVAL and other indicators correlate with IPS (indicateurs de position sociale, a higher IPS indicates the higher average socio-economic status of parents at the school level) in Paris? Can you propose a way to represent graphically the correlations, for High schools in Paris (separately for public and private high schools)?
+
+
+2.  
+
+    ```         
+    How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?
+    ```
+
+3.  
+
+    ```         
+    How do the IVAL and other indicators correlate with IPS (indicateurs de position sociale, a higher IPS indicates the higher average socio-economic status of parents at the school level) in Paris? Can you propose a way to represent graphically the correlations, for High schools in Paris (separately for public and private high schools)?
+    ```
+
+```{r}
+library(vroom)
+library(here)
+here::i_am("quality_education.Rproj")
+quality_indicators <- vroom(here("data", "fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv"))
+ips <- vroom(here("data", "fr-en-ips_lycees.csv"))
+ival <- vroom(here("data", "ival-2024-154664.xlsx"))
+```
+
