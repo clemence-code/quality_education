@@ -34,12 +34,31 @@ editor: visual
     How do the IVAL and other indicators correlate with IPS (indicateurs de position sociale, a higher IPS indicates the higher average socio-economic status of parents at the school level) in Paris? Can you propose a way to represent graphically the correlations, for High schools in Paris (separately for public and private high schools)?
     ```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+
+rm(list = ls())
+```
+
+
 ```{r}
 library(vroom)
 library(here)
+library(ggplot2)
+library(dplyr)
+library(readxl)
+library(tidyr)
 here::i_am("quality_education.Rproj")
 quality_indicators <- vroom(here("data", "fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv"))
 ips <- vroom(here("data", "fr-en-ips_lycees.csv"))
-ival <- vroom(here("data", "ival-2024-154664.xlsx"))
+ival <- read_excel(here("data","ival-2024-154664.xlsx"),skip=1)
+
+# merging (clé primaire : UAI)
+
 ```
+
 
