@@ -17,14 +17,74 @@ editor: visual
 1.  
 
     ```         
-    What are the different high school quality indicators published by the ministry of higher education?
+    What are the different high school quality indicators published by the ministry of higher education? [^sources1]
     ```
+[^sources1]:
+  https://www.education.gouv.fr/les-indicateurs-de-resultats-des-colleges-et-des-lycees-377729
+  https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-gt_v2/ 
+
+
+The French Ministry of Education, through the DEPP (Direction de l’évaluation, de la prospective et de la performance), publishes annually the *High School Value-Added Indicators* (Indicateurs de Valeur Ajoutée des Lycées, IVAL).\
+Their objective is to assess high school performance while accounting for differences in student intake - rather than relying solely on raw outcome measures.
+
+Three main **quality indicators** are published for general and technological high schools:
+
+\underline{Baccalaureate success rate}
+
+This indicator measures the proportion of students present at the baccalaureate examination who obtain the diploma: \[ \text{Success rate} = \frac{\text{Number of students who pass the bac}}{\text{Number of students present at the exam}} \]
+
+\underline{Access rate to the baccalaureate}
+
+The access rate represents the probability that a student entering a given high school in *seconde* will eventually obtain the baccalaureate in the same establishment, even if the student repeats a grade.\
+It is computed as the product of successive transition probabilities: \[ \text{Access rate}\_{2nde \to bac} = (2nde \to 1ère) \times (1ère \to Terminale) \times (Terminale \to Bac) \]
+
+\underline{Baccalaureate honors (mentions) rate}
+
+This indicator measures the proportion of students present at the baccalaureate examination who obtain a mention (Assez Bien, Bien, or Très Bien (with or without Félicitations)).
+
+For most indicators, results are published both **overall** and **by track or series** (general and technological streams such as STI2D, STMG, STL, ST2S, etc.).\
+Each indicator is reported as an **observed value**, an **expected value**, and a **value-added measure**.
+
+Administrative variables available in the datasets (UAI code, location, sector, student counts by grade) are descriptive and do not constitute quality indicators.
+
 
 2.  
 
     ```         
-    How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?
+    How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?[^sources2]
     ```
+
+[^sources2]: 
+  https://catalogue.depp.education.fr/index.php/catalog/274 
+  Franck Evain (Insee), *Indicateurs de valeur ajoutée des lycées*:  https://www.insee.fr/fr/information/5008703?sommaire=5008710 
+
+The **value-added indicator** measures the contribution of a high school to student outcomes, net of external factors.\
+It is defined as the difference between the observed rate and the expected rate:
+
+\[ \text{Value-added} = \text{Observed rate} - \text{Expected rate} \]
+
+The expected rate is the average rate of high schools with students that have identical characteristics. Therefore the IVAL evaluates the contribution due to the establishment, given initial students’ profiles. A positive value-added indicates that on average the high school allows students to perform better than expected given their initial profile, while a negative value-added indicates underperformance.
+
+\underline{Estimation of expected rates}
+
+Expected rates are estimated using **multilevel logistic regression models**, which are appropriate for binary outcomes (success or failure, mention or no mention) and account for the hierarchical structure of the data (students nested within schools).
+
+The models include:
+
+**Individual-level variables** - Age\
+- Gender\
+- Academic achievement at entry into high school (e.g. results at the Diplôme National du Brevet)\
+- Social background, measured using the Social Position Index (IPS)
+
+**School-level variables** - Proportion of students with academic delay\
+- Proportion of girls\
+- Average IPS of students\
+- Average prior academic achievement within the school
+
+For each student, the model produces an expected probability of success, access, or obtaining a mention, assuming enrollment in a statistically average high school (i.e. excluding the specific school effect).\
+The expected rate of a high school is then computed as the average of its students’ expected probabilities.
+
+In the case of access to the baccalaureate, separate models are estimated for each transition (seconde→première, première→terminale, terminale→bac), and the expected access rate is obtained by multiplying the expected transition probabilities.
 
 3.  
 
@@ -134,6 +194,7 @@ df_paris |>
   ) |>
   print()
 ```
+
 
 ## graphical representations
 ### descriptive analyses
@@ -247,11 +308,6 @@ For public high schools, the right tail of the distribution extends up to about 
 In contrast, private high schools exhibit a second peak around +1. The deviation of the private-sector distribution is much narrower, largely concentrated between −1 and +1, while the public-sector distribution is slightly more spread out and extends further to the left.
 
 Overall, this indicates that negative value added is primarily a public-sector phenomenon in this sample, and that performance relative to expectations is more tightly concentrated in the private sector.
-
-
-
-
-
 
 
 
