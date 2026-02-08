@@ -135,8 +135,8 @@ df_paris |>
   print()
 ```
 
-## représentations graphiques
-### analyses descriptives
+## graphical representations
+### descriptive analyses
 
 ```{r}
 ggplot(df_paris,
@@ -146,7 +146,12 @@ ggplot(df_paris,
     x = "IPS",
     title = "IPS distribution : Private vs Public"
   )
+```
+The IPS distribution differs markedly across sectors. Public high schools include a substantial mass of establishments with IPS values between 90 and 110, a range that is absent among private schools. The public-sector distribution peaks around an IPS of approximately 130.
 
+By contrast, private high schools are concentrated at much higher socio-economic levels. Their IPS values are mainly distributed between 120 and 160, with a clear peak around 145. This indicates a strong social selection into the private sector.
+
+```{r}
 ggplot(df_paris,
        aes(x = ecart_type_de_l_ips_voie_gt, fill = secteur)) +
   geom_density(alpha = 0.4) +
@@ -155,7 +160,9 @@ ggplot(df_paris,
     title = "Intern social heterogeneity distribution"
   )
 ```
+The within-school dispersion of IPS also differs across sectors. In private high schools, the density of the IPS standard deviation is flat and is mainly concentrated between 20 and 35.
 
+In public high schools, the IPS standard deviation is both higher and less dispersed. It typically ranges from about 25 to above 40, with a strong density peak around 37–38. Most public schools lie between 32 and 42. This suggests substantially greater social heterogeneity within public establishments.
 
 ```{r}
 # nuages de points 
@@ -171,7 +178,14 @@ ggplot(df_paris,
     y = "Success rate",
     title = "IPS and Success rate"
   )
+```
+Private high schools display a large mass of success rates at 100%, and all private schools exceed 96%. There is no strong visible correlation between IPS and success rates within the private sector. However, as IPS increases, success rates are less likely to be below 100%.
 
+In the public sector, a strong positive relationship between IPS and success rates is observed. Public schools with an IPS below 120 never reach a 100% success rate, and their outcomes are widely dispersed, typically between about 88% and 97–98%. As IPS approaches the 120–130 range, all schools exceed 95%. Above an IPS of 130, success rates are almost exclusively between 99% and 100%.
+
+This pattern is consistent with strong socio-economic gradients in academic success within public high schools.
+
+```{r}
 # 2. avec le taux d'accès
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
@@ -183,7 +197,14 @@ ggplot(df_paris,
     y = "Rate of access to the final year (Terminale)",
     title = "IPS and Rate of access to the final year"
   )
+```
+In private high schools, the rate of access to terminale generally lies between 96% and 100% and does not appear strongly correlated with IPS. However, two private establishments around an IPS of 120 display much lower retention rates (around 70%). This may reflect selective retention practices (e.g. exclusion or strategic orientation), suggesting particularly strong selection mechanisms in some private schools.
 
+In public high schools, the relationship with IPS is again pronounced. Below an IPS of 120, no school reaches a 100% access rate, and variance is higher, with some schools around 90% and others closer to 96–98%. Above an IPS of 120, 100% access rates begin to appear and dispersion decreases, with most schools between 97% and 100%. Above an IPS of 130, access rates are almost entirely between 98% and 100%.
+
+This likely reflects socio-economic differences in educational trajectories: higher-IPS families are more likely to maintain academic tracks through to terminale, while lower-IPS public schools may experience more reorientation toward vocational pathways.
+
+```{r}
 # 3. avec valeur ajoutée du taux de réussite
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
@@ -194,13 +215,19 @@ ggplot(df_paris,
   labs(
     x = "IPS",
     y = "added value of the Success rate",
-    size = "Number of students in final year (terminale)",
+    size = "Number of students in final year",
     title = "IPS, VA and highschool size"
   )
 
 
 ```
+In private high schools, below an IPS of 130, only one establishment shows a negative value added (around −1), while all others are positive. Most private schools are around +1, and several reach values between +2 and +4, suggesting positive contributions to student outcomes.
 
+Above an IPS of 130, value added becomes tightly concentrated around zero. This is mechanically consistent with the construction of the indicator: with very high IPS, expected success rates are already extremely high, so realized outcomes (100% success rate) tend to match expectations, resulting in near-zero value added. Large positive value added becomes rare, and most schools are at 0, +1, or occasionally −1.
+
+Public high schools are much more heterogeneous once again. Below an IPS of 120, few schools are at zero value added. Two schools reach very high positive values of +7, while several are strongly negative (around −4 or −5), and most lie between −2 and +2. Above an IPS of 120, and again partly by construction, value added becomes more concentrated around zero, with most schools between −1, 0, and +1.
+
+This highlights substantially greater heterogeneity in public-school performance relative to expectations.
 ```{r}
 # densité
 
@@ -214,7 +241,12 @@ ggplot(df_paris,
     title = "distribution of the added value of the Success rate: Private vs Public"
   )
 ```
+The density plot of value added confirms these patterns. For strongly negative values (below −1), there are no private high schools, whereas several public high schools fall in this range. Both sectors display a peak around zero.
 
+For public high schools, the right tail of the distribution extends up to about +3. 
+In contrast, private high schools exhibit a second peak around +1. The deviation of the private-sector distribution is much narrower, largely concentrated between −1 and +1, while the public-sector distribution is slightly more spread out and extends further to the left.
+
+Overall, this indicates that negative value added is primarily a public-sector phenomenon in this sample, and that performance relative to expectations is more tightly concentrated in the private sector.
 
 
 
