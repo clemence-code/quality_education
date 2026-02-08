@@ -20,8 +20,6 @@ editor: visual
     What are the different high school quality indicators published by the ministry of higher education?
     ```
 
-
-
 2.  
 
     ```         
@@ -43,7 +41,6 @@ knitr::opts_chunk$set(
 
 rm(list = ls())
 ```
-
 
 ```{r}
 library(vroom)
@@ -102,7 +99,7 @@ quality_paris_y <- quality_paris_y |>
   mutate(
     secteur = case_when(
       str_detect(tolower(secteur), "public") ~ "Public",
-      str_detect(tolower(secteur), "priv") ~ "Privé",
+      str_detect(tolower(secteur), "priv") ~ "Private",
       TRUE ~ as.character(secteur)
     )
   )
@@ -111,7 +108,7 @@ ips_paris_y <- ips_paris_y |>
   mutate(
     secteur = case_when(
       str_detect(tolower(secteur), "public") ~ "Public",
-      str_detect(tolower(secteur), "priv") ~ "Privé",
+      str_detect(tolower(secteur), "priv") ~ "Private",
       TRUE ~ as.character(secteur)
     )
   )
@@ -137,6 +134,94 @@ df_paris |>
   ) |>
   print()
 ```
+
+## représentations graphiques
+### analyses descriptives
+
+```{r}
+ggplot(df_paris,
+       aes(x = ips_ensemble_gt_pro, fill = secteur)) +
+  geom_density(alpha = 0.4) +
+  labs(
+    x = "IPS",
+    title = "IPS distribution : Private vs Public"
+  )
+
+ggplot(df_paris,
+       aes(x = ecart_type_de_l_ips_voie_gt, fill = secteur)) +
+  geom_density(alpha = 0.4) +
+  labs(
+    x = "IPS Standard deviation",
+    title = "Intern social heterogeneity distribution"
+  )
+```
+
+
+```{r}
+# nuages de points 
+# 1. avec taux de réussite / IPS (+ lm)
+ggplot(df_paris,
+       aes(x = ips_ensemble_gt_pro,
+           y = taux_de_reussite_toutes_series)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE) +
+  facet_wrap(~ secteur) +
+  labs(
+    x = "IPS",
+    y = "Success rate",
+    title = "IPS and Success rate"
+  )
+
+# 2. avec le taux d'accès
+ggplot(df_paris,
+       aes(x = ips_ensemble_gt_pro,
+           y = taux_dacces_terminale_bac)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~ secteur) +
+  labs(
+    x = "IPS",
+    y = "Rate of access to the final year (Terminale)",
+    title = "IPS and Rate of access to the final year"
+  )
+
+# 3. avec valeur ajoutée du taux de réussite
+ggplot(df_paris,
+       aes(x = ips_ensemble_gt_pro,
+           y = valeur_ajoutee_du_taux_de_reussite_toutes_series,
+           size = effectif_de_terminale)) +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~ secteur) +
+  labs(
+    x = "IPS",
+    y = "added value of the Success rate",
+    size = "Number of students in final year (terminale)",
+    title = "IPS, VA and highschool size"
+  )
+
+
+```
+
+```{r}
+# densité
+
+ggplot(df_paris,
+       aes(x = valeur_ajoutee_du_taux_de_reussite_toutes_series,
+           fill = secteur)) +
+  geom_density(alpha = 0.4) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "Added value of the Success rate",
+    title = "distribution of the added value of the Success rate: Private vs Public"
+  )
+```
+
+
+
+
+
+
+
+
 
 
 
