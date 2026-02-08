@@ -4,93 +4,114 @@ author: "Daphné PERRY Justine CATTA Chloé MARQUIS Clémence HUANG"
 execute:
   echo: false
 format:
-  wordcount-html:
+  html:
     toc: true
     toc-depth: 3
     toc-location: left
     code-fold: true
   pdf:
     toc: true
+    pdf-engine: lualatex
 editor: visual
 ---
 
-1.  
+1.
 
-    ```         
-    What are the different high school quality indicators published by the ministry of higher education? [^sources1]
-    ```
+What are the different high school quality indicators published by the ministry of higher education? [^sources1]
+
 [^sources1]:
-  https://www.education.gouv.fr/les-indicateurs-de-resultats-des-colleges-et-des-lycees-377729
-  https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-gt_v2/ 
+https://www.education.gouv.fr/les-indicateurs-de-resultats-des-colleges-et-des-lycees-377729  
+https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-gt_v2/
 
-
-The French Ministry of Education, through the DEPP (Direction de l’évaluation, de la prospective et de la performance), publishes annually the *High School Value-Added Indicators* (Indicateurs de Valeur Ajoutée des Lycées, IVAL).\
-Their objective is to assess high school performance while accounting for differences in student intake - rather than relying solely on raw outcome measures.
+The French Ministry of Education, through the DEPP (Direction de l’évaluation, de la prospective et de la performance), publishes annually the *High School Value-Added Indicators* (Indicateurs de Valeur Ajoutée des Lycées, IVAL).
+Their objective is to assess high school performance while accounting for differences in student intake, rather than relying solely on raw outcome measures.
 
 Three main **quality indicators** are published for general and technological high schools:
 
-\underline{Baccalaureate success rate}
+### Baccalaureate success rate
 
-This indicator measures the proportion of students present at the baccalaureate examination who obtain the diploma: \[ \text{Success rate} = \frac{\text{Number of students who pass the bac}}{\text{Number of students present at the exam}} \]
+This indicator measures the proportion of students present at the baccalaureate examination who obtain the diploma:
 
-\underline{Access rate to the baccalaureate}
+$$
+\mathrm{Success\ rate}
+=
+\frac{\mathrm{Number\ of\ students\ who\ pass\ the\ bac}}
+{\mathrm{Number\ of\ students\ present\ at\ the\ exam}}
+$$
 
-The access rate represents the probability that a student entering a given high school in *seconde* will eventually obtain the baccalaureate in the same establishment, even if the student repeats a grade.\
-It is computed as the product of successive transition probabilities: \[ \text{Access rate}\_{2nde \to bac} = (2nde \to 1ère) \times (1ère \to Terminale) \times (Terminale \to Bac) \]
+### Access rate to the baccalaureate
 
-\underline{Baccalaureate honors (mentions) rate}
+The access rate represents the probability that a student entering a given high school in *seconde* will eventually obtain the baccalaureate in the same establishment, even if the student repeats a grade.
+It is computed as the product of successive transition probabilities:
 
-This indicator measures the proportion of students present at the baccalaureate examination who obtain a mention (Assez Bien, Bien, or Très Bien (with or without Félicitations)).
+$$
+\mathrm{Access\ rate}_{\mathrm{2nde}\ \to\ \mathrm{bac}}
+=
+(\mathrm{2nde}\ \to\ \mathrm{1\`ere})
+\times
+(\mathrm{1\`ere}\ \to\ \mathrm{Terminale})
+\times
+(\mathrm{Terminale}\ \to\ \mathrm{Bac})
+$$
 
-For most indicators, results are published both **overall** and **by track or series** (general and technological streams such as STI2D, STMG, STL, ST2S, etc.).\
+### Baccalaureate honors (mentions) rate
+
+This indicator measures the proportion of students present at the baccalaureate examination who obtain a mention (Assez Bien, Bien, or Très Bien, with or without Félicitations).
+
+For most indicators, results are published both **overall** and **by track or series** (general and technological streams such as STI2D, STMG, STL, ST2S, etc.).
 Each indicator is reported as an **observed value**, an **expected value**, and a **value-added measure**.
 
 Administrative variables available in the datasets (UAI code, location, sector, student counts by grade) are descriptive and do not constitute quality indicators.
 
+2.
 
-2.  
+How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated? [^sources2]
 
-    ```         
-    How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated?[^sources2]
-    ```
+[^sources2]:
+https://catalogue.depp.education.fr/index.php/catalog/274  
+Franck Evain (Insee), *Indicateurs de valeur ajoutée des lycées*: https://www.insee.fr/fr/information/5008703?sommaire=5008710
 
-[^sources2]: 
-  https://catalogue.depp.education.fr/index.php/catalog/274 
-  Franck Evain (Insee), *Indicateurs de valeur ajoutée des lycées*:  https://www.insee.fr/fr/information/5008703?sommaire=5008710 
-
-The **value-added indicator** measures the contribution of a high school to student outcomes, net of external factors.\
+The **value-added indicator** measures the contribution of a high school to student outcomes, net of external factors.
 It is defined as the difference between the observed rate and the expected rate:
 
-\[ \text{Value-added} = \text{Observed rate} - \text{Expected rate} \]
+$$
+\mathrm{Value\text{-}added}
+=
+\mathrm{Observed\ rate}
+-
+\mathrm{Expected\ rate}
+$$
 
-The expected rate is the average rate of high schools with students that have identical characteristics. Therefore the IVAL evaluates the contribution due to the establishment, given initial students’ profiles. A positive value-added indicates that on average the high school allows students to perform better than expected given their initial profile, while a negative value-added indicates underperformance.
+The expected rate is the average rate of high schools with students that have identical characteristics. Therefore the IVAL evaluates the contribution due to the establishment, given initial students’ profiles.
+A positive value-added indicates that on average the high school allows students to perform better than expected given their initial profile, while a negative value-added indicates underperformance.
 
-\underline{Estimation of expected rates}
+### Estimation of expected rates
 
-Expected rates are estimated using **multilevel logistic regression models**, which are appropriate for binary outcomes (success or failure, mention or no mention) and account for the hierarchical structure of the data (students nested within schools).
+Expected rates are estimated using logistic models (often multilevel) for binary outcomes (success or failure, mention or no mention) and account for the hierarchical structure of the data (students nested within schools).
 
 The models include:
 
-**Individual-level variables** - Age\
-- Gender\
-- Academic achievement at entry into high school (e.g. results at the Diplôme National du Brevet)\
+**Individual-level variables**
+- Age
+- Gender
+- Academic achievement at entry into high school (e.g., results at the Diplôme National du Brevet)
 - Social background, measured using the Social Position Index (IPS)
 
-**School-level variables** - Proportion of students with academic delay\
-- Proportion of girls\
-- Average IPS of students\
+**School-level variables**
+- Proportion of students with academic delay
+- Proportion of girls
+- Average IPS of students
 - Average prior academic achievement within the school
 
-For each student, the model produces an expected probability of success, access, or obtaining a mention, assuming enrollment in a statistically average high school (i.e. excluding the specific school effect).\
+For each student, the model produces an expected probability of success, access, or obtaining a mention, assuming enrollment in a statistically average high school (i.e., excluding the specific school effect).
 The expected rate of a high school is then computed as the average of its students’ expected probabilities.
 
 In the case of access to the baccalaureate, separate models are estimated for each transition (seconde→première, première→terminale, terminale→bac), and the expected access rate is obtained by multiplying the expected transition probabilities.
 
-3.  
+3.
 
-    ```         
-    How do the IVAL and other indicators correlate with IPS (indicateurs de position sociale, a higher IPS indicates the higher average socio-economic status of parents at the school level) in Paris? Can you propose a way to represent graphically the correlations, for High schools in Paris (separately for public and private high schools)?
-    ```
+How do the IVAL and other indicators correlate with IPS (a higher IPS indicates a higher average socio-economic status of parents at the school level) in Paris?
+Proposed graphical representations are shown separately for public and private high schools.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
@@ -98,9 +119,9 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE
 )
-
 rm(list = ls())
 ```
+
 
 ```{r}
 library(vroom)
@@ -111,13 +132,16 @@ library(readxl)
 library(tidyr)
 library(stringr)
 library(janitor)
+
 here::i_am("quality_education.Rproj")
 
 # Import datasets
 quality_indicators <- vroom(here("data", "fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv")) |>
   clean_names()
+
 ips <- vroom(here("data", "fr-en-ips_lycees.csv")) |>
   clean_names()
+
 path_ival <- here("data", "ival-2024-154664.xlsx")
 ival_lgt <- read_excel(path_ival, sheet = "LGT", skip = 1) |>
   clean_names()
@@ -126,15 +150,16 @@ ival_lp  <- read_excel(path_ival, sheet = "LP",  skip = 1) |>
 ```
 
 ```{r}
-# Data cleaning and merging
-
 # Convert logical columns (mostly NA) to numeric
 quality_indicators <- quality_indicators |>
   mutate(across(where(is.logical), ~ as.numeric(.)))
 
-# Build year from school-year label (e.g., "2023-2024" -> 2023)
+# Build year from school-year label (robust to possible suffixes)
+rentree_col <- names(ips)[str_detect(names(ips), "rentree")][1]
+if (is.na(rentree_col)) stop("No column containing 'rentree' found in ips.")
+
 ips <- ips |>
-  mutate(annee = as.integer(str_extract(rentree_scolaire, "\\d{4}")))
+  mutate(annee = as.integer(str_extract(as.character(.data[[rentree_col]]), "\\d{4}")))
 
 # Keep Paris (dept 75)
 quality_paris <- quality_indicators |>
@@ -159,7 +184,7 @@ quality_paris_y <- quality_paris_y |>
   mutate(
     secteur = case_when(
       str_detect(tolower(secteur), "public") ~ "Public",
-      str_detect(tolower(secteur), "priv") ~ "Private",
+      str_detect(tolower(secteur), "priv") ~ "Privé",
       TRUE ~ as.character(secteur)
     )
   )
@@ -168,7 +193,7 @@ ips_paris_y <- ips_paris_y |>
   mutate(
     secteur = case_when(
       str_detect(tolower(secteur), "public") ~ "Public",
-      str_detect(tolower(secteur), "priv") ~ "Private",
+      str_detect(tolower(secteur), "priv") ~ "Privé",
       TRUE ~ as.character(secteur)
     )
   )
@@ -195,40 +220,35 @@ df_paris |>
   print()
 ```
 
+## Graphical representations
 
-## graphical representations
-### descriptive analyses
+### Descriptive analyses
 
 ```{r}
-ggplot(df_paris,
-       aes(x = ips_ensemble_gt_pro, fill = secteur)) +
+ggplot(df_paris, aes(x = ips_ensemble_gt_pro, fill = secteur)) +
   geom_density(alpha = 0.4) +
   labs(
     x = "IPS",
-    title = "IPS distribution : Private vs Public"
+    title = "IPS distribution: Public vs Private (Paris)"
   )
 ```
-The IPS distribution differs markedly across sectors. Public high schools include a substantial mass of establishments with IPS values between 90 and 110, a range that is absent among private schools. The public-sector distribution peaks around an IPS of approximately 130.
-
-By contrast, private high schools are concentrated at much higher socio-economic levels. Their IPS values are mainly distributed between 120 and 160, with a clear peak around 145. This indicates a strong social selection into the private sector.
 
 ```{r}
-ggplot(df_paris,
-       aes(x = ecart_type_de_l_ips_voie_gt, fill = secteur)) +
-  geom_density(alpha = 0.4) +
-  labs(
-    x = "IPS Standard deviation",
-    title = "Intern social heterogeneity distribution"
-  )
+if ("ecart_type_de_l_ips_voie_gt" %in% names(df_paris)) {
+  ggplot(df_paris, aes(x = ecart_type_de_l_ips_voie_gt, fill = secteur)) +
+    geom_density(alpha = 0.4) +
+    labs(
+      x = "IPS standard deviation",
+      title = "Within-school social heterogeneity"
+    )
+} else {
+  cat("Variable ecart_type_de_l_ips_voie_gt not found in df_paris.\n")
+}
 ```
-The within-school dispersion of IPS also differs across sectors. In private high schools, the density of the IPS standard deviation is flat and is mainly concentrated between 20 and 35.
 
-In public high schools, the IPS standard deviation is both higher and less dispersed. It typically ranges from about 25 to above 40, with a strong density peak around 37–38. Most public schools lie between 32 and 42. This suggests substantially greater social heterogeneity within public establishments.
+## Correlation with IPS
 
-## correlation with IPS 
 ```{r}
-# nuages de points 
-# 1. avec taux de réussite / IPS (+ lm)
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = taux_de_reussite_toutes_series)) +
@@ -238,17 +258,11 @@ ggplot(df_paris,
   labs(
     x = "IPS",
     y = "Success rate",
-    title = "IPS and Success rate"
+    title = "IPS and success rate (Paris)"
   )
 ```
-Private high schools display a large mass of success rates at 100%, and all private schools exceed 96%. There is no strong visible correlation between IPS and success rates within the private sector. However, as IPS increases, success rates are less likely to be below 100%.
-
-In the public sector, a strong positive relationship between IPS and success rates is observed. Public schools with an IPS below 120 never reach a 100% success rate, and their outcomes are widely dispersed, typically between about 88% and 97–98%. As IPS approaches the 120–130 range, all schools exceed 95%. Above an IPS of 130, success rates are almost exclusively between 99% and 100%.
-
-This pattern is consistent with strong socio-economic gradients in academic success within public high schools.
 
 ```{r}
-# 2. avec le taux d'accès
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = taux_dacces_terminale_bac)) +
@@ -256,18 +270,12 @@ ggplot(df_paris,
   facet_wrap(~ secteur) +
   labs(
     x = "IPS",
-    y = "Rate of access to the final year (Terminale)",
-    title = "IPS and Rate of access to the final year"
+    y = "Access rate to baccalaureate",
+    title = "IPS and access rate (Paris)"
   )
 ```
-In private high schools, the rate of access to terminale generally lies between 96% and 100% and does not appear strongly correlated with IPS. However, two private establishments around an IPS of 120 display much lower retention rates (around 70%). This may reflect selective retention practices (e.g. exclusion or strategic orientation), suggesting particularly strong selection mechanisms in some private schools.
-
-In public high schools, the relationship with IPS is again pronounced. Below an IPS of 120, no school reaches a 100% access rate, and variance is higher, with some schools around 90% and others closer to 96–98%. Above an IPS of 120, 100% access rates begin to appear and dispersion decreases, with most schools between 97% and 100%. Above an IPS of 130, access rates are almost entirely between 98% and 100%.
-
-This likely reflects socio-economic differences in educational trajectories: higher-IPS families are more likely to maintain academic tracks through to terminale, while lower-IPS public schools may experience more reorientation toward vocational pathways.
 
 ```{r}
-# 3. avec valeur ajoutée du taux de réussite
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = valeur_ajoutee_du_taux_de_reussite_toutes_series,
@@ -276,40 +284,23 @@ ggplot(df_paris,
   facet_wrap(~ secteur) +
   labs(
     x = "IPS",
-    y = "added value of the Success rate",
-    size = "Number of students in final year",
-    title = "IPS, VA and highschool size"
+    y = "Value added (success rate)",
+    size = "Terminale cohort size",
+    title = "IPS and value added (success rate) with cohort size (Paris)"
   )
-
-
 ```
-In private high schools, below an IPS of 130, only one establishment shows a negative value added (around −1), while all others are positive. Most private schools are around +1, and several reach values between +2 and +4, suggesting positive contributions to student outcomes.
 
-Above an IPS of 130, value added becomes tightly concentrated around zero. This is mechanically consistent with the construction of the indicator: with very high IPS, expected success rates are already extremely high, so realized outcomes (100% success rate) tend to match expectations, resulting in near-zero value added. Large positive value added becomes rare, and most schools are at 0, +1, or occasionally −1.
-
-Public high schools are much more heterogeneous once again. Below an IPS of 120, few schools are at zero value added. Two schools reach very high positive values of +7, while several are strongly negative (around −4 or −5), and most lie between −2 and +2. Above an IPS of 120, and again partly by construction, value added becomes more concentrated around zero, with most schools between −1, 0, and +1.
-
-This highlights substantially greater heterogeneity in public-school performance relative to expectations.
 ```{r}
-# densité
-
 ggplot(df_paris,
        aes(x = valeur_ajoutee_du_taux_de_reussite_toutes_series,
            fill = secteur)) +
   geom_density(alpha = 0.4) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   labs(
-    x = "Added value of the Success rate",
-    title = "distribution of the added value of the Success rate: Private vs Public"
+    x = "Value added (success rate)",
+    title = "Distribution of value added (success rate): Public vs Private (Paris)"
   )
 ```
-The density plot of value added confirms these patterns. For strongly negative values (below −1), there are no private high schools, whereas several public high schools fall in this range. Both sectors display a peak around zero.
-
-For public high schools, the right tail of the distribution extends up to about +3. 
-In contrast, private high schools exhibit a second peak around +1. The deviation of the private-sector distribution is much narrower, largely concentrated between −1 and +1, while the public-sector distribution is slightly more spread out and extends further to the left.
-
-Overall, this indicates that negative value added is primarily a public-sector phenomenon in this sample, and that performance relative to expectations is more tightly concentrated in the private sector.
-
 
 ```{r}
 ggplot(df_paris,
@@ -317,16 +308,9 @@ ggplot(df_paris,
   geom_density(alpha = 0.4) +
   labs(
     x = "Mention rate (all series)",
-    title = "Distribution of mention rates – Public vs Private (Paris)"
+    title = "Distribution of mention rates: Public vs Private (Paris)"
   )
-
 ```
-For private high schools, the distribution of mention rates is extremely concentrated at very high levels. Most private schools are between about 85% and 100%, with a very strong peak close to 95–100%.
-
-For public high schools, the distribution is much more spread out. A large share of public schools are above 50%, with a first peak around 55–60%, and a second mass between about 80% and 90%. This bimodal-looking shape suggests strong heterogeneity among  public parisian establishments, with some schools performing much closer to private-school levels, while others have substantially lower mention rates.
-
-Overall, this figure shows a very strong sectoral gap in mention rates. Private schools are concentrated at the top of the distribution, while public schools display both lower average mention rates and much greater dispersion.
-
 
 ```{r}
 ggplot(df_paris,
@@ -335,11 +319,7 @@ ggplot(df_paris,
   geom_density(alpha = 0.4) +
   geom_vline(xintercept = 0, linetype = "dashed") +
   labs(
-    x = "Value added to mention rate",
-    title = "Distribution of value added to mention rates"
+    x = "Value added (mention rate)",
+    title = "Distribution of value added (mention rate): Public vs Private (Paris)"
   )
-
 ```
-For private high schools, the distribution of value added to mention rates is shifted to the right and tightly concentrated around positive values. The main peak is clearly above zero (around +5), indicating that many private schools generate more mentions than expected given their student composition. The distribution has a long right tail, with some schools reaching very high positive value added (above +20 and even one close to +40).
-
-For public high schools, the distribution is centered closer to zero and is more symmetric, with a substantial mass of negative values. Many public schools have negative value added to mention rates (down to around −15), meaning they produce fewer mentions than expected given their IPS. While there are also public schools with positive value added, the right tail is less extreme than in the private sector and stops before +20.
