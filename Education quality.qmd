@@ -15,16 +15,12 @@ format:
 editor: visual
 ---
 
-1.
+# 1. What are the different high school quality indicators published by the ministry of higher education? [^1]
 
-What are the different high school quality indicators published by the ministry of higher education? [^sources1]
+[^1]: https://www.education.gouv.fr/les-indicateurs-de-resultats-des-colleges-et-des-lycees-377729\
+    https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-gt_v2/
 
-[^sources1]:
-https://www.education.gouv.fr/les-indicateurs-de-resultats-des-colleges-et-des-lycees-377729  
-https://data.education.gouv.fr/explore/dataset/fr-en-indicateurs-de-resultat-des-lycees-gt_v2/
-
-The French Ministry of Education, through the DEPP (Direction de l’évaluation, de la prospective et de la performance), publishes annually the *High School Value-Added Indicators* (Indicateurs de Valeur Ajoutée des Lycées, IVAL).
-Their objective is to assess high school performance while accounting for differences in student intake, rather than relying solely on raw outcome measures.
+The French Ministry of Education, through the DEPP (Direction de l’évaluation, de la prospective et de la performance), publishes annually the *High School Value-Added Indicators* (Indicateurs de Valeur Ajoutée des Lycées, IVAL). Their objective is to assess high school performance while accounting for differences in student intake, rather than relying solely on raw outcome measures.
 
 Three main **quality indicators** are published for general and technological high schools:
 
@@ -41,8 +37,7 @@ $$
 
 ### Access rate to the baccalaureate
 
-The access rate represents the probability that a student entering a given high school in *seconde* will eventually obtain the baccalaureate in the same establishment, even if the student repeats a grade.
-It is computed as the product of successive transition probabilities:
+The access rate represents the probability that a student entering a given high school in *seconde* will eventually obtain the baccalaureate in the same establishment, even if the student repeats a grade. It is computed as the product of successive transition probabilities:
 
 $$
 \mathrm{Access\ rate}_{\mathrm{2nde}\ \to\ \mathrm{bac}}
@@ -58,21 +53,16 @@ $$
 
 This indicator measures the proportion of students present at the baccalaureate examination who obtain a mention (Assez Bien, Bien, or Très Bien, with or without Félicitations).
 
-For most indicators, results are published both **overall** and **by track or series** (general and technological streams such as STI2D, STMG, STL, ST2S, etc.).
-Each indicator is reported as an **observed value**, an **expected value**, and a **value-added measure**.
+For most indicators, results are published both **overall** and **by track or series** (general and technological streams such as STI2D, STMG, STL, ST2S, etc.). Each indicator is reported as an **observed value**, an **expected value**, and a **value-added measure**.
 
 Administrative variables available in the datasets (UAI code, location, sector, student counts by grade) are descriptive and do not constitute quality indicators.
 
-2.
+# 2.  How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated? [^2]
 
-How is the value-added measure (IVAL, indicateur de valeur ajoutée), calculated? [^sources2]
+[^2]: https://catalogue.depp.education.fr/index.php/catalog/274\
+    Franck Evain (Insee), *Indicateurs de valeur ajoutée des lycées*: https://www.insee.fr/fr/information/5008703?sommaire=5008710
 
-[^sources2]:
-https://catalogue.depp.education.fr/index.php/catalog/274  
-Franck Evain (Insee), *Indicateurs de valeur ajoutée des lycées*: https://www.insee.fr/fr/information/5008703?sommaire=5008710
-
-The **value-added indicator** measures the contribution of a high school to student outcomes, net of external factors.
-It is defined as the difference between the observed rate and the expected rate:
+The **value-added indicator** measures the contribution of a high school to student outcomes, net of external factors. It is defined as the difference between the observed rate and the expected rate:
 
 $$
 \mathrm{Value\text{-}added}
@@ -82,8 +72,7 @@ $$
 \mathrm{Expected\ rate}
 $$
 
-The expected rate is the average rate of high schools with students that have identical characteristics. Therefore the IVAL evaluates the contribution due to the establishment, given initial students’ profiles.
-A positive value-added indicates that on average the high school allows students to perform better than expected given their initial profile, while a negative value-added indicates underperformance.
+The expected rate is the average rate of high schools with students that have identical characteristics. Therefore the IVAL evaluates the contribution due to the establishment, given initial students’ profiles. A positive value-added indicates that on average the high school allows students to perform better than expected given their initial profile, while a negative value-added indicates underperformance.
 
 ### Estimation of expected rates
 
@@ -91,29 +80,19 @@ Expected rates are estimated using logistic models (often multilevel) for binary
 
 The models include:
 
-**Individual-level variables**
-- Age
-- Gender
-- Academic achievement at entry into high school (e.g., results at the Diplôme National du Brevet)
-- Social background, measured using the Social Position Index (IPS)
+**Individual-level variables** - Age - Gender - Academic achievement at entry into high school (e.g., results at the Diplôme National du Brevet) - Social background, measured using the Social Position Index (IPS)
 
-**School-level variables**
-- Proportion of students with academic delay
-- Proportion of girls
-- Average IPS of students
-- Average prior academic achievement within the school
+**School-level variables** - Proportion of students with academic delay - Proportion of girls - Average IPS of students - Average prior academic achievement within the school
 
-For each student, the model produces an expected probability of success, access, or obtaining a mention, assuming enrollment in a statistically average high school (i.e., excluding the specific school effect).
-The expected rate of a high school is then computed as the average of its students’ expected probabilities.
+For each student, the model produces an expected probability of success, access, or obtaining a mention, assuming enrollment in a statistically average high school (i.e., excluding the specific school effect). The expected rate of a high school is then computed as the average of its students’ expected probabilities.
 
 In the case of access to the baccalaureate, separate models are estimated for each transition (seconde→première, première→terminale, terminale→bac), and the expected access rate is obtained by multiplying the expected transition probabilities.
 
-3.
+# 3.  How do the IVAL and other indicators correlate with IPS (a higher IPS indicates a higher average socio-economic status of parents at the school level) in Paris? Proposed graphical representations are shown separately for public and private high schools.
 
-How do the IVAL and other indicators correlate with IPS (a higher IPS indicates a higher average socio-economic status of parents at the school level) in Paris?
-Proposed graphical representations are shown separately for public and private high schools.
-
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
+#| message: false
+#| warning: false
 knitr::opts_chunk$set(
   echo    = TRUE,
   message = FALSE,
@@ -122,8 +101,9 @@ knitr::opts_chunk$set(
 rm(list = ls())
 ```
 
-
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 library(vroom)
 library(here)
 library(ggplot2)
@@ -149,7 +129,9 @@ ival_lp  <- read_excel(path_ival, sheet = "LP",  skip = 1) |>
   clean_names()
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 # Convert logical columns (mostly NA) to numeric
 quality_indicators <- quality_indicators |>
   mutate(across(where(is.logical), ~ as.numeric(.)))
@@ -224,7 +206,9 @@ df_paris |>
 
 ### Descriptive analyses
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris, aes(x = ips_ensemble_gt_pro, fill = secteur)) +
   geom_density(alpha = 0.4) +
   labs(
@@ -233,7 +217,9 @@ ggplot(df_paris, aes(x = ips_ensemble_gt_pro, fill = secteur)) +
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 if ("ecart_type_de_l_ips_voie_gt" %in% names(df_paris)) {
   ggplot(df_paris, aes(x = ecart_type_de_l_ips_voie_gt, fill = secteur)) +
     geom_density(alpha = 0.4) +
@@ -248,7 +234,9 @@ if ("ecart_type_de_l_ips_voie_gt" %in% names(df_paris)) {
 
 ## Correlation with IPS
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = taux_de_reussite_toutes_series)) +
@@ -262,7 +250,9 @@ ggplot(df_paris,
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = taux_dacces_terminale_bac)) +
@@ -275,7 +265,9 @@ ggplot(df_paris,
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = ips_ensemble_gt_pro,
            y = valeur_ajoutee_du_taux_de_reussite_toutes_series,
@@ -290,7 +282,9 @@ ggplot(df_paris,
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = valeur_ajoutee_du_taux_de_reussite_toutes_series,
            fill = secteur)) +
@@ -302,7 +296,9 @@ ggplot(df_paris,
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = taux_de_mentions_toutes_series, fill = secteur)) +
   geom_density(alpha = 0.4) +
@@ -312,7 +308,9 @@ ggplot(df_paris,
   )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| message: false
+#| warning: false
 ggplot(df_paris,
        aes(x = valeur_ajoutee_du_taux_de_mentions_toutes_series,
            fill = secteur)) +
