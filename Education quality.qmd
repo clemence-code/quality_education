@@ -225,6 +225,7 @@ The within-school dispersion of IPS also differs across sectors. In private high
 
 In public high schools, the IPS standard deviation is both higher and less dispersed. It typically ranges from about 25 to above 40, with a strong density peak around 37–38. Most public schools lie between 32 and 42. This suggests substantially greater social heterogeneity within public establishments.
 
+## correlation with IPS 
 ```{r}
 # nuages de points 
 # 1. avec taux de réussite / IPS (+ lm)
@@ -310,6 +311,35 @@ In contrast, private high schools exhibit a second peak around +1. The deviation
 Overall, this indicates that negative value added is primarily a public-sector phenomenon in this sample, and that performance relative to expectations is more tightly concentrated in the private sector.
 
 
+```{r}
+ggplot(df_paris,
+       aes(x = taux_de_mentions_toutes_series, fill = secteur)) +
+  geom_density(alpha = 0.4) +
+  labs(
+    x = "Mention rate (all series)",
+    title = "Distribution of mention rates – Public vs Private (Paris)"
+  )
+
+```
+For private high schools, the distribution of mention rates is extremely concentrated at very high levels. Most private schools are between about 85% and 100%, with a very strong peak close to 95–100%.
+
+For public high schools, the distribution is much more spread out. A large share of public schools are above 50%, with a first peak around 55–60%, and a second mass between about 80% and 90%. This bimodal-looking shape suggests strong heterogeneity among  public parisian establishments, with some schools performing much closer to private-school levels, while others have substantially lower mention rates.
+
+Overall, this figure shows a very strong sectoral gap in mention rates. Private schools are concentrated at the top of the distribution, while public schools display both lower average mention rates and much greater dispersion.
 
 
+```{r}
+ggplot(df_paris,
+       aes(x = valeur_ajoutee_du_taux_de_mentions_toutes_series,
+           fill = secteur)) +
+  geom_density(alpha = 0.4) +
+  geom_vline(xintercept = 0, linetype = "dashed") +
+  labs(
+    x = "Value added to mention rate",
+    title = "Distribution of value added to mention rates"
+  )
 
+```
+For private high schools, the distribution of value added to mention rates is shifted to the right and tightly concentrated around positive values. The main peak is clearly above zero (around +5), indicating that many private schools generate more mentions than expected given their student composition. The distribution has a long right tail, with some schools reaching very high positive value added (above +20 and even one close to +40).
+
+For public high schools, the distribution is centered closer to zero and is more symmetric, with a substantial mass of negative values. Many public schools have negative value added to mention rates (down to around −15), meaning they produce fewer mentions than expected given their IPS. While there are also public schools with positive value added, the right tail is less extreme than in the private sector and stops before +20.
