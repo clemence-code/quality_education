@@ -52,13 +52,91 @@ library(ggplot2)
 library(dplyr)
 library(readxl)
 library(tidyr)
+library(stringr)
+library(janitor)
 here::i_am("quality_education.Rproj")
-quality_indicators <- vroom(here("data", "fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv"))
-ips <- vroom(here("data", "fr-en-ips_lycees.csv"))
-ival <- read_excel(here("data","ival-2024-154664.xlsx"),skip=1)
 
-# merging (clé primaire : UAI)
-
+# Import datasets
+quality_indicators <- vroom(here("data", "fr-en-indicateurs-de-resultat-des-lycees-gt_v2.csv")) |>
+  clean_names()
+ips <- vroom(here("data", "fr-en-ips_lycees.csv")) |>
+  clean_names()
+path_ival <- here("data", "ival-2024-154664.xlsx")
+ival_lgt <- read_excel(path_ival, sheet = "LGT", skip = 1) |>
+  clean_names()
+ival_lp  <- read_excel(path_ival, sheet = "LP",  skip = 1) |>
+  clean_names()
 ```
+
+```{r}
+# Data cleaning and merging
+
+# Convert logical columns (mostly NA) to numeric
+quality_indicators <- quality_indicators |>
+  mutate(across(where(is.logical), ~ as.numeric(.)))
+
+# Build year from school-year label (e.g., "2023-2024" -> 2023)
+ips <- ips |>
+  mutate(annee = as.integer(str_extract(rentree_scolaire, "\\d{4}")))
+
+# Keep Paris (dept 75)
+quality_paris <- quality_indicators |>
+  filter(code_departement == "75")
+
+ips_paris <- ips |>
+  filter(code_du_departement == "75")
+
+# Pick the most recent common year
+years_common <- intersect(sort(unique(quality_paris$annee)), sort(unique(ips_paris$annee)))
+if (length(years_common) == 0) stop("No common year in Paris (75).")
+year_use <- max(years_common, na.rm = TRUE)
+
+quality_paris_y <- quality_paris |>
+  filter(annee == year_use)
+
+ips_paris_y <- ips_paris |>
+  filter(annee == year_use)
+
+# Harmonize sector labels
+quality_paris_y <- quality_paris_y |>
+  mutate(
+    secteur = case_when(
+      str_detect(tolower(secteur), "public") ~ "Public",
+      str_detect(tolower(secteur), "priv") ~ "Privé",
+      TRUE ~ as.character(secteur)
+    )
+  )
+
+ips_paris_y <- ips_paris_y |>
+  mutate(
+    secteur = case_when(
+      str_detect(tolower(secteur), "public") ~ "Public",
+      str_detect(tolower(secteur), "priv") ~ "Privé",
+      TRUE ~ as.character(secteur)
+    )
+  )
+
+# Merge (UAI + year + sector)
+df_paris <- quality_paris_y |>
+  left_join(
+    ips_paris_y |>
+      select(
+        uai, annee, secteur,
+        matches("^ips_"),
+        matches("^ecart_type_de_l_ips")
+      ),
+    by = c("uai", "annee", "secteur")
+  )
+
+# Quick join check
+df_paris |>
+  summarise(
+    n_qi = n(),
+    n_ips_match = sum(!is.na(ips_ensemble_gt_pro)),
+    pct_ips_match = mean(!is.na(ips_ensemble_gt_pro)) * 100
+  ) |>
+  print()
+```
+
 
 
